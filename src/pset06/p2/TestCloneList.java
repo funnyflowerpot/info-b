@@ -1,13 +1,17 @@
 package pset06.p2;
 
+/**
+ * @author pwicke
+ *
+ * TODO (pw) DOC, DOC, JAVA-DOC! DOC, DOC, JAVA-DOC!
+ */
 public class TestCloneList {
 	
-//TODO (answered): Third test provides 'Begründung warum Ihre Implementation bewusst diese Anforderung
-//		nicht erfüllt' but not 'EINIGE Anforderungen' don't know what they want from us.
 
-  //>>> In context it says "Begründen Sie, _wenn_ Ihre Implementation...". So
-  //>>> you do not _have to_ have some requirements unsatisfied.
-  
+  // FIXME (pw) a lot of recurring code in main(). might be worth to have an
+  // own method for each part of the tests. At least, some kind of stupid
+  // loop ("for(int i = 0; i < 2; i++)") might be worth to avoid copy-and-
+  // pasting code.
 	public static void main(String[] args){
 	
 		// lets create some integers and a list for integers
@@ -15,6 +19,7 @@ public class TestCloneList {
 		TypeSaveList<Integer> intList = new TypeSaveList<Integer>();
 		
 		// and some chars and a list for integers
+		// TODO (pw) how about {'c','o','r','i','n','n','a','<','3'} ?
 		char[] charArray = {'s','r','i','e','g','l'};
 		TypeSaveList<Character> charList =  new TypeSaveList<Character>();
 		
@@ -29,6 +34,8 @@ public class TestCloneList {
 		}
 		charList.reset();
 		
+		
+		
 		// First test:  x.clone() != x
 		System.out.println("1.) x.clone() != x ");
 		
@@ -41,6 +48,8 @@ public class TestCloneList {
 			System.out.println("OK.");
 		else System.out.println("FAIL.");
 		System.out.println("(charList)\n");
+		
+		
 		
 		// Second test:  x.clone().getClass() == x.getClass()
 		System.out.println("2.) x.clone().getClass() == x.getClass()");
@@ -55,6 +64,8 @@ public class TestCloneList {
 		else System.out.println("FAIL.");
 		System.out.println("(charList)\n");
 		
+		
+		
 		// Third test: x.clone().equals(x)
 		System.out.println("3.) x.clone().equals(x)");
 		System.out.println("Shallow copy does not provide reference copy, FAIL expected.");
@@ -68,6 +79,8 @@ public class TestCloneList {
 			System.out.println("OK.");
 		else System.out.println("FAIL.");
 		System.out.println("(charList)\n");
+		
+		
 		
 		// Fourth test: list.elem().equals( list.copy().elem() )
 		System.out.println("4.) Test of each list elem: list.elem().equals( list.copy().elem() )");

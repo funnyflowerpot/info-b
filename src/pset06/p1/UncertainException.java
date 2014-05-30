@@ -43,6 +43,8 @@ public int uncertain2() throws java.io.IOException {
       } finally {
     	 // before incrementation the return value is send, here: 1
     	 // the incrementation sets i=1 to i=2
+       // TODO (pw) notice insertion of next line
+       // a return in a finally block erases any previous exceptions
          return i++;
       }
    }
@@ -85,6 +87,10 @@ public int uncertain4() {
     	  // This finally block is activated incrementing i=2 to i=3 
     	  // as i=2 was set in catch block AND not in try block, the return value is 2
     	  // return is done before incrementation
+        // TODO (pw) spelling suggestion for comments above
+        // Here i will be incremented to i=3. A return-value in a finally-
+        // block overrides a return-value in a catch-block. Therefore, the
+        // "result" will be 2 and i will be equal to 3.
          return i++;
       }
    }
@@ -103,6 +109,8 @@ public int uncertain5() {
          // this exception will lead to the catch in the main, resulting in "Ex!" message
       } finally {
          i++; // incrementing i=2 to i=3, will give i=3
+         // TODO (pw) notice insertion
+         // no return value (ergo result=0), but exception will arrive in calling method
          throw new NumberFormatException();
       }
    }
@@ -114,6 +122,12 @@ public int uncertain5() {
    @SuppressWarnings("finally")
 public int uncertain6() {
       for (;;)  { // endless loop
+        // TODO (pw) :O!
+        // Wenn "for(;;)" tatsächlich in offiziellem Code anstelle von
+        // "while(true)" vorkommt, dann brauchst Du Dir wegen erweiterter
+        // Benutzung von "for" in unserem Code keine Gedanken mehr machen.
+        // Wenn der Drache am Montag anfangen will Feuer zu speien, dann
+        // zeigen wir ihr diese Ziele.
          try {
         	// ends endless loop
             break;

@@ -2,6 +2,13 @@ package pset06.p2;
 
 import java.util.NoSuchElementException;
 
+/**
+ * @author pwicke
+ *
+ * TODO (pw) this javadoc ;)
+ *
+ * @param <T>
+ */
 public class TypeSaveList<T> implements Cloneable {
 	
 	//TODO (answered): Answer me the following question
@@ -77,6 +84,9 @@ public class TypeSaveList<T> implements Cloneable {
 	    * @throws CloneNotSupportedException if 
 	    */
 	   public TypeSaveList<T> clone() {
+	     // TODO (pw) I'd say this try-catch is not necessarily necessary.
+	     // The only advantage is, that clone() is not having a "throws"-clause,
+	     // since InternalError is unchecked.
 		try {
 			@SuppressWarnings("unchecked")
 			// by convention, the clones is created by calling super.clone()

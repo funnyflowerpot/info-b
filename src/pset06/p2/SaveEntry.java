@@ -1,7 +1,15 @@
 package pset06.p2;
 
+/**
+ * @author pwicke
+ *
+ * TODO (pw) more javadoc for this nation!
+ *
+ * @param <T>
+ */
 public class SaveEntry<T> {
 	
+  // TODO (pw) the name "generic" might be misleading. suggestion: "elem"
 	protected T generic;	
 	protected SaveEntry<T> next;
 	

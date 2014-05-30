@@ -1,13 +1,54 @@
 Agenda:
 
-PSET 04: 	- ( 99.42% )
+PSET 06: 	(91%)
 
-Aufgabe 4.1   ( 90% )
-	- Noch zur Kontrolle von sriegl
-	- Der Begriff "Dynamisches Binden" muss noch
-	  implementiert werden (!!!)
-	
-Aufgabe 4.2 - ( 100% )
-	
-Aufgabe 4.3	- ( 100% )
-	  
+
+ nr.1		(98%)
+ 		- (pw) vier TODOs abarbeiten
+ 
+ nr.2
+ 			(90%)
+ 		- javadocs
+ 		- noch mehr javadocs
+ 		- (pw) TODOs abklappern
+ 
+ nr.3		(85%)
+ 		- (sr) testklasse schreiben 
+ 		- (sr) dem haeschen erklären
+ 		  - (pw) was will häschen wissen?
+ 		- (sr) javadocs
+ 		- kommentare
+		- javadocs für getter und setter :P
+		  - ich weiß nicht, was sie daran so toll findet
+		  - wenn es reicht, dass ich nämliche, nichts-sagende standard-
+		    javadoc-kommentare mit immer gleichem inhalt von eclipse 
+		    generieren lasse, warum sollte ich das dann überhaupt tun?
+		- fehlerbehandlung
+		    
+
+> ...wie das alles aufgebaut ist, 
+
+HeapSort wurde zur Verfügung gestellt.
+Heap soll auf zwei Arten funktionieren, einmal per Comparator und einmal per
+Comparable. Mit BrainlessComparator werden intern Comparable-s mit einem
+Comparator verarbeitet, das vereinheitlicht Code. Der Heap selbst wurde
+nachprogrammiert, weil Handhabung mit einer Collection bei den vielen
+Tauschen der Elemente wesentlich umständlicher ist als bei einem Array.
+Code aus Info A wurde recycelt.
+
+> was die schwierigkeiten waren, 
+
+Auf den Trick mit BrainlessComparator zu kommen und ihn zu implementieren. 
+Stolz überwinden und Heap mit Array implementieren, statt mit beispielsweise
+LinkedList aus dem Java Collection Framework.
+
+> worauf es bei der aufgabe ankam, 
+
+Ich vermute auf eine saubere Implementierung der beiden Arbeitsweisen, auf
+Wiederholung von Heap, abermals auf automatisierte Testung und korrekte
+Fehlerbehandlung.
+
+> was nützliches wissen aus der aufgabe für spätere aufgaben hervorgeht...
+
+Emulation einer Funktionalität (Comparable) durch eine andere (Comparator),
+meiner Meinung nach. Vertiefung von Exceptions?
