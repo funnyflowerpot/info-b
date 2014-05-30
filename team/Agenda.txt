@@ -1,0 +1,13 @@
+Agenda:
+
+PSET 04: 	- ( 99.42% )
+
+Aufgabe 4.1   ( 90% )
+	- Noch zur Kontrolle von sriegl
+	- Der Begriff "Dynamisches Binden" muss noch
+	  implementiert werden (!!!)
+	
+Aufgabe 4.2 - ( 100% )
+	
+Aufgabe 4.3	- ( 100% )
+	  
