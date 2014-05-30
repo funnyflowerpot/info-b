@@ -2,9 +2,12 @@ package pset06.p2;
 
 public class TestCloneList {
 	
-//TODO: Third test provides 'Begründung warum Ihre Implementation bewusst diese Anforderung
+//TODO (answered): Third test provides 'Begründung warum Ihre Implementation bewusst diese Anforderung
 //		nicht erfüllt' but not 'EINIGE Anforderungen' don't know what they want from us.
 
+  //>>> In context it says "Begründen Sie, _wenn_ Ihre Implementation...". So
+  //>>> you do not _have to_ have some requirements unsatisfied.
+  
 	public static void main(String[] args){
 	
 		// lets create some integers and a list for integers

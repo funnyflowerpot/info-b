@@ -4,18 +4,49 @@ import java.util.NoSuchElementException;
 
 public class TypeSaveList<T> implements Cloneable {
 	
-	//TODO: Answer me the following question
+	//TODO (answered): Answer me the following question
 	// In which relation does the T of TypeSaveList stand to the <T> of SaveEntry
 	// Does it assure that both generic classes uses the same type for T ?
+
+  //>>> Yes.
+  
 	// Is it even possible to have e.g. SaveEntry<G> and implement it in TypeSaveList<T> ?
-	
+
+  //>>> No. The T in TypeSaveList<T> is some kind of declaration, which means
+  //>>> that T can be referred to somewhere else in the class.
+  
+  //>>> You can work around that by having your class declaration saying:
+  //>>> public class TypeSaveList<T, G> implements Cloneable {
+  
 	// I tested implementing SaveEntry<G> and TypeSaveList MUST ONLY use SaveEntry<T> to refer
 	// to entries. This means, that T is the same TYPE for both classes, once it is defined in
 	// the TypeSaveList<T>. Even though the SaveEntry class is not forced to call it 'T' in its
 	// class.
+  
+  //>>> Unfortunately, I am not completely sure whether I get, what you are
+  //>>> trying to say, but it sounds like you're right.
 	
 	// This class defines with it's <T> what kind of type the OTHER class MUST use. Correct if 
 	// I'm wrong.
+  
+  //>>> Since I am uncertain about the cause for your question I will provide
+  //>>> a short monologue.
+  
+  //>>> I'd say yes, but it is worth noticing, that this is one effect of the
+  //>>> generic in this class. The T for class definition TypeSaveList<T> is a
+  //>>> "place holder" for an arbitrary class, as well as for the class
+  //>>> definition of SaveEntry<T>. Since the class definition TypeSaveList<T>
+  //>>> wants to use the class SaveEntry, the parameter for the class must be
+  //>>> specified. It happens, that for the usage of class SaveEntry the T,
+  //>>> declared for TypeSaveList<T>, gets used as parameter for SaveEntry<T>.
+
+  //>>> You could say the parameter for class TypeSaveList simultaneously
+  //>>> determines the parameter for class SaveEntry (within TypeSaveList),
+  //>>> since the T in the definition of class SaveEntry does not only have 
+  //>>> the same name ("T" for generics by convention), but it is equal to the
+  //>>> parameter for class TypeSaveList (again: only for all SaveEntry within
+  //>>> TypeSaveList). Outside of TypeSaveList the T for SaveEntry must be
+  //>>> specified specially and can be arbitrary again.
 	
 	  /**
 	    * Reference on the first Entry of this List
