@@ -2,6 +2,7 @@ package pset06.p4;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 /**
  * @author sriegl
@@ -148,8 +149,11 @@ public class Heap<T> {
    * Return the first element in the heap.
    * 
    * @return first element in heap
+   * @throws NoSuchElementException if heap is empty
    */
   public T getFirst() {
+    if(empty())
+      throw new NoSuchElementException("Heap is empty.");
     return elements[0];
   }
 }

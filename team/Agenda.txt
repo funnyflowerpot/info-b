@@ -1,6 +1,6 @@
 Agenda:
 
-PSET 06: 	(91%)
+PSET 06: 	(??%)
 
 
  nr.1		(98%)
@@ -12,18 +12,13 @@ PSET 06: 	(91%)
  		- noch mehr javadocs
  		- (pw) TODOs abklappern
  
- nr.3		(85%)
- 		- (sr) testklasse schreiben 
- 		- (sr) dem haeschen erklären
- 		  - (pw) was will häschen wissen?
- 		- (sr) javadocs
- 		- kommentare
+ nr.3		(100%)
+ 		- (pw) dem haeschen erklären: siehe unten
 		- javadocs für getter und setter :P
 		  - ich weiß nicht, was sie daran so toll findet
 		  - wenn es reicht, dass ich nämliche, nichts-sagende standard-
 		    javadoc-kommentare mit immer gleichem inhalt von eclipse 
 		    generieren lasse, warum sollte ich das dann überhaupt tun?
-		- fehlerbehandlung
 		    
 
 > ...wie das alles aufgebaut ist, 
