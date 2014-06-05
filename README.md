@@ -1,6 +1,10 @@
 
 # info-b
 
-These are the collaborative solutions of him and me for our computer science course.
+Agenda: Problem Set 07
 
-Super duper toll!
+- 7.1 Fraction: How to implement without constructor?
+
+- 7.2 Iterator: Done, separate Iterator class cannot access List data fields!?
+
+- 7.3 Visitor and Visitable: In progress...
