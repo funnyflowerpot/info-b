@@ -3,57 +3,17 @@ package pset06.p2;
 import java.util.NoSuchElementException;
 
 /**
+ * This class is the type save list. It achieves this
+ * type safety as the class is <bold>generic</bold>.
+ * It implements the Interface Clonable and uses the
+ * the SaveEntry.class to maintain type safety. 
+ * 
  * @author pwicke
- *
- * TODO (pw) this javadoc ;)
- *
- * @param <T>
+ * @date 01.06.2014
+ * @param <T> is the placeholder for type of all List entries
  */
 public class TypeSaveList<T> implements Cloneable {
 	
-	//TODO (answered): Answer me the following question
-	// In which relation does the T of TypeSaveList stand to the <T> of SaveEntry
-	// Does it assure that both generic classes uses the same type for T ?
-
-  //>>> Yes.
-  
-	// Is it even possible to have e.g. SaveEntry<G> and implement it in TypeSaveList<T> ?
-
-  //>>> No. The T in TypeSaveList<T> is some kind of declaration, which means
-  //>>> that T can be referred to somewhere else in the class.
-  
-  //>>> You can work around that by having your class declaration saying:
-  //>>> public class TypeSaveList<T, G> implements Cloneable {
-  
-	// I tested implementing SaveEntry<G> and TypeSaveList MUST ONLY use SaveEntry<T> to refer
-	// to entries. This means, that T is the same TYPE for both classes, once it is defined in
-	// the TypeSaveList<T>. Even though the SaveEntry class is not forced to call it 'T' in its
-	// class.
-  
-  //>>> Unfortunately, I am not completely sure whether I get, what you are
-  //>>> trying to say, but it sounds like you're right.
-	
-	// This class defines with it's <T> what kind of type the OTHER class MUST use. Correct if 
-	// I'm wrong.
-  
-  //>>> Since I am uncertain about the cause for your question I will provide
-  //>>> a short monologue.
-  
-  //>>> I'd say yes, but it is worth noticing, that this is one effect of the
-  //>>> generic in this class. The T for class definition TypeSaveList<T> is a
-  //>>> "place holder" for an arbitrary class, as well as for the class
-  //>>> definition of SaveEntry<T>. Since the class definition TypeSaveList<T>
-  //>>> wants to use the class SaveEntry, the parameter for the class must be
-  //>>> specified. It happens, that for the usage of class SaveEntry the T,
-  //>>> declared for TypeSaveList<T>, gets used as parameter for SaveEntry<T>.
-
-  //>>> You could say the parameter for class TypeSaveList simultaneously
-  //>>> determines the parameter for class SaveEntry (within TypeSaveList),
-  //>>> since the T in the definition of class SaveEntry does not only have 
-  //>>> the same name ("T" for generics by convention), but it is equal to the
-  //>>> parameter for class TypeSaveList (again: only for all SaveEntry within
-  //>>> TypeSaveList). Outside of TypeSaveList the T for SaveEntry must be
-  //>>> specified specially and can be arbitrary again.
 	
 	  /**
 	    * Reference on the first Entry of this List
@@ -84,9 +44,7 @@ public class TypeSaveList<T> implements Cloneable {
 	    * @throws CloneNotSupportedException if 
 	    */
 	   public TypeSaveList<T> clone() {
-	     // TODO (pw) I'd say this try-catch is not necessarily necessary.
-	     // The only advantage is, that clone() is not having a "throws"-clause,
-	     // since InternalError is unchecked.
+		   // try catch block to avoid CloneNotSupportedException - as seen in Tutorial
 		try {
 			@SuppressWarnings("unchecked")
 			// by convention, the clones is created by calling super.clone()
@@ -98,7 +56,7 @@ public class TypeSaveList<T> implements Cloneable {
 		} 
 	}
 	   
-/* The methods add and elem require to act with Objects in their signature. If you extend the
+/* The methods add and elem require to act with type Object in their signature. If you extend the
  * list you have to override these two methods with generic parameters and return types. 
  * If you just override these methods with the generic types - this won't work, as Java uses
  * type erasure, i.e. Java will delete all type-information and replace it with the Object type.
@@ -107,7 +65,7 @@ public class TypeSaveList<T> implements Cloneable {
  */
 	   	   /**
 	   	    * Adds a new generic type to the TypeSaveList.
-	   	    * It instatiates a new SaveEntry
+	   	    * It instantiates a new SaveEntry
 	   	    * @param x of type <code>generic</t> that you want to add
 	   	    */
 		   public void add(T x) {
@@ -127,7 +85,7 @@ public class TypeSaveList<T> implements Cloneable {
 		      if (endpos()) {
 		         throw new NoSuchElementException("Already at the end of this TypeSaveList");
 		      }
-		      return pos.next.generic;
+		      return pos.next.elem;
 		   }
 ////////////* Same methods as List class implements */////////////////////////////////////////////
 		   /**

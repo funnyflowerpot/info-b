@@ -49,7 +49,7 @@ public class NumberTrainer {
       
       input = scanner.nextLine().trim();
       
-      System.out.println(getCharactersFor(number, 2, printSpaces));
+      System.out.println(getCharactersFor(number, 1, printSpaces));
     }
     
     scanner.close();

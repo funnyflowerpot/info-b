@@ -2,16 +2,17 @@ package pset06.p2;
 
 /**
  * @author pwicke
- *
- * TODO (pw) DOC, DOC, JAVA-DOC! DOC, DOC, JAVA-DOC!
+ * @date 01.06.2014
+ * This is an automated test program. It will check
+ * if the TypeSaveList.class implemented clone() in 
+ * a correct fashion.
+ * First test:  x.clone() != x
+ * Second test:  x.clone().getClass() == x.getClass()
+ * Third test: x.clone().equals(x)
+ * Fourth test: list.elem().equals( list.copy().elem() )
  */
 public class TestCloneList {
 	
-
-  // FIXME (pw) a lot of recurring code in main(). might be worth to have an
-  // own method for each part of the tests. At least, some kind of stupid
-  // loop ("for(int i = 0; i < 2; i++)") might be worth to avoid copy-and-
-  // pasting code.
 	public static void main(String[] args){
 	
 		// lets create some integers and a list for integers
@@ -19,7 +20,6 @@ public class TestCloneList {
 		TypeSaveList<Integer> intList = new TypeSaveList<Integer>();
 		
 		// and some chars and a list for integers
-		// TODO (pw) how about {'c','o','r','i','n','n','a','<','3'} ?
 		char[] charArray = {'s','r','i','e','g','l'};
 		TypeSaveList<Character> charList =  new TypeSaveList<Character>();
 		

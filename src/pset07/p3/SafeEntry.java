@@ -1,4 +1,4 @@
-package pset06.p2;
+package pset07.p3;
 
 /**
  * This class enables save entries for the TypeSaveList.
@@ -7,21 +7,21 @@ package pset06.p2;
  * @author pwicke
  * @param <T> is the placeholder for the data type of the list entry 
  */
-public class SaveEntry<T> {
+public class SafeEntry<T> {
 	
 	// protected and generic data
 	protected T elem;	
-	protected SaveEntry<T> next;
+	protected SafeEntry<T> next;
 	
 	// Constructor chaining
-	protected SaveEntry(T one, SaveEntry<T> entry){
+	protected SafeEntry(T one, SafeEntry<T> entry){
 		this.elem = one;
 		this.next = entry;
 	}
-	protected SaveEntry(T single){
+	protected SafeEntry(T single){
 		this(single, null);
 	}
-	protected SaveEntry(){
+	protected SafeEntry(){
 		this(null,null);
 	}
 }
