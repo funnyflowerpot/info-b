@@ -1,5 +1,7 @@
 package pset07.p4;
 
+import javax.swing.JOptionPane;
+
 
 
 public class Ls {
@@ -7,10 +9,9 @@ public class Ls {
 	/*
 	 * These are flags that will help to parse the input
 	 */
-	private static boolean hasArgs		= false;
+  // TODO (pw): could these variables names, that describe their meaning or purpose more precisely?
 	private static boolean recursion	= false;
 	private static boolean size			= false;
-	private static boolean otherDir		= false;
 	
 	private static String OS			= null;
 	private static String path			= null;
@@ -56,29 +57,23 @@ public class Ls {
 	 * @param <code>String[]</code> arguments that will be entered in command line
 	 */
 	private static void parseArguments(String[] arguments){
-		//FIXME:Parsing problem 
-		//Works fine in identifying cases but for some reason the .matches does not work!
 		
 		// adjust parsing according to OS
 		setOsParsing();
 		// Check for number of arguments
 		switch(arguments.length){
-			case 0:	
-				// no arguments provided: set argumentFlag to false and path to current path
-				hasArgs=true;
-				path = System.getProperty("user.dir");
-				break;
+// TODO ANPASSEN!
 			case 1:
 				// recursion demanded [-r]: list all files in all directories of current dir.
 				if(arguments[0].matches(recursionCommand)){
 					recursion=true;
-					path = System.getProperty("user.dir");
-					System.out.println("RecursionCommand detected!"); //FIXME: Not reachable!
+					path = ".";
+					System.out.println("RecursionCommand detected!"); 
 				}
 				// size demanded [-s]: list all files and their size in current dir.
 				else if(arguments[0].matches(sizeCommand)){
 					size=true;
-					path = System.getProperty("user.dir");
+					path = ".";
 				}
 				break;
 			case 2:
@@ -86,13 +81,13 @@ public class Ls {
 				if (arguments[0].matches(recursionCommand) && arguments[1].matches(sizeCommand)){
 					size = true;
 					recursion = true;
-					path = System.getProperty("user.dir");
+					path = ".";
 				}
 				// size and recursion demanded [-s] [-r] in current directory
 				else if(arguments[0].matches(sizeCommand) && arguments[1].matches(recursionCommand)){
 					size = true;
 					recursion=true;
-					path = System.getProperty("user.dir");
+					path = ".";
 				}
 				// size and path demanded  [-s] {Path}
 				else if(arguments[0].matches(sizeCommand) && arguments[1].matches(path)){
@@ -131,14 +126,39 @@ public class Ls {
 	}
 	
 	public static void main(String[] args){
-		
-		// Set all flags according to arguments
+    // Provide a more comfortable input mechanism for testing in eclipse.
+    // This will emulate application start with command line arguments.
+    if(args.length == 0) {
+
+      String input = JOptionPane.showInputDialog("Please provide some command line arguments:");
+      // main.args[] now contains all split parts of arguments, that were separated
+      // by a white space and puts them recursively in the main method
+      main(input.split(" "));
+      
+      return;
+    }
+    
+    // FIXME (pw): please review. i suggest a helper method in our library
+    // that allows following call. the following line is meant to replace the
+    // whole "if"-block above. please let me know, if you think the following
+    // line is more readable and understandable than block above. note: use 
+    // ctrl+click to open implementation after hovering curser above method name.
+    //args = TestingLibrary.populateProgramArguments(args);
+
+    
+    // Set all flags according to arguments
 		parseArguments(args);
-		
+
+    // FIXME: next line only for temporary testing
+    path = ".";
+
 		// Creates visitable file with appropriate path
+    // FIXME (pw): in parseArguments(), a regex pattern gets assigned to "path"
 		VisitableFile f = new VisitableFile(path);
+
+		// TODO: check if "path" is actually a valid path (-> exists(), isDirectory()), handle exception
 		
-		
+		f.accept(new FileVisitor(recursion, size));
 				
 		
 	}

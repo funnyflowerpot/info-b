@@ -27,5 +27,5 @@ public interface Visitor<E> {
     *         <code>false</code>
     */
    public boolean visit(E o);
-
+   
 }

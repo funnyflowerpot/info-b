@@ -1,6 +1,7 @@
 package pset07.p3;
 import java.util.NoSuchElementException;
 
+
 /**
  * This class is the type Safe list. It achieves this
  * type safety as the class is <bold>generic</bold>.
@@ -120,14 +121,13 @@ public class VisitList<T> implements Visitable<T>{
 		      }
 		      pos = pos.next;
 		   }
-
+		   
+		   
+			
 		@Override
 		public void accept(Visitor<T> v) {
-		  reset();
-		  while(!endpos()) {
-		    if(!v.visit(elem()))
-		      break;
-		    advance();
-		  }
+			while(!endpos() && v.visit(elem()) ){
+				advance();
+			}
 		}
 }
