@@ -1,5 +1,6 @@
 package pset07.p2;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -24,6 +25,11 @@ public class TypeSafeList<T> implements Iterable<T> {
 	    * References before the actual Entry of this List
 	    */
 	   protected SafeEntry<T> pos; 
+	   /**
+	    * Thread safety device
+	    */
+		private int mods;
+		
 
 	   /**
 	    * Create a new empty List.
@@ -53,6 +59,8 @@ public class TypeSafeList<T> implements Iterable<T> {
 		   public void add(T x) {
 		      SafeEntry<T> newone = new SafeEntry<T>( x, pos.next);
 		      pos.next = newone;
+		      // register mod 
+		      mods++;
 		   }
 		   
 		   /**
@@ -81,6 +89,8 @@ public class TypeSafeList<T> implements Iterable<T> {
 		         throw new NoSuchElementException("Already at the end of this TypeSafeList");
 		      }
 		      pos.next = pos.next.next;
+		   // register mod 
+		      mods++;
 		   }
 		   /**
 		    * Determines if this TypeSafeList is empty or not.
@@ -129,10 +139,15 @@ public class TypeSafeList<T> implements Iterable<T> {
 		@Override
 		public Iterator<T> iterator() {
 			return new Iterator<T>(){
+				
 				// flag: true if next() is called at least once, false if remove() called twice 
 				//		 in a row, thus indicating a state of valid modification of the collection.
 				private boolean modifiableState = false;
 				
+				// thread safety 
+				private int currentMods = mods;
+				
+				// take the current element of the list and save the reference in this anon class 
 				private SafeEntry<T> element = (SafeEntry<T>) TypeSafeList.this.begin;
 				
 				@Override
@@ -144,14 +159,16 @@ public class TypeSafeList<T> implements Iterable<T> {
 
 				@Override
 				public T next() {
-					// Check if in modifiable state
+					// Check if in modifiable state and thread safety guaranteed
 					if(!modifiableState) modifiableState=true;
+					if(currentMods!=mods) throw new ConcurrentModificationException();
 					
 					if(this.hasNext()){
 						// if there is an element answer with current element and
 						// iterate to the next element
 						SafeEntry<T> current = element.next;
 						element = element.next; 
+						
 						return (T) current.elem;
 					}
 					else
@@ -160,8 +177,10 @@ public class TypeSafeList<T> implements Iterable<T> {
 
 				@Override
 				public void remove() {
+					// Check for thread safety
+					if(currentMods!=mods) throw new ConcurrentModificationException();
+					
 					if(this.hasNext() && modifiableState){
-						
 						// take current element and assign pointer to next element
 						// this will leave the element unreferenced, thus it will be deleted
 						TypeSafeList.this.pos.next = TypeSafeList.this.pos.next.next;

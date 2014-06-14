@@ -1,6 +1,8 @@
 package pset07.p2;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
 import pset07.p2.TypeSafeList;
 
 
@@ -140,7 +142,35 @@ public class IteratorTest {
 		}
 		System.out.format("%s iteration with method usage!",(checkFlag)? "[ OK ]" : "[ FAIL ]");
 		System.out.println();
+		
+		/*
+		 * CHECK 8:
+		 * Check if thread safety is implemented for delete and next
+		 */
+		Iterator<Integer> failIter = intList.iterator();
+		intList.reset();
+		intList.delete();
+		try{
+			failIter.next();
+			System.out.println("[ FAIL ] thread safety test!");
+		}catch(ConcurrentModificationException e){
+			System.out.println("[ OK ] thread safety test: delete/next!");
+		}
+		/*
+		 * CHECK 9:
+		 * Check if thread safety is implemented for add and remove
+		 */
+		Iterator<Integer> failingIter = intList.iterator();
+		intList.reset();
+		intList.add(108);
+		try{
+			failingIter.remove();
+			System.out.println("[ FAIL ] thread safety test!");
+		}catch(ConcurrentModificationException e){
+			System.out.println("[ OK ] thread safety test: add/remove");
+		}
+		
 		// Be polite.
-		System.out.println("I hope the test satisfying.");
+		System.out.println("I hope the test was satisfying.");
 	}
 }
