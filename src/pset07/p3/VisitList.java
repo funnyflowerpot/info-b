@@ -123,7 +123,6 @@ public class VisitList<T> implements Visitable<T>{
 
 		@Override
 		public void accept(Visitor<T> v) {
-			// TODO (pw): Auto-generated method stub PLUS SUGGESTION
 		  reset();
 		  while(!endpos()) {
 		    if(!v.visit(elem()))
