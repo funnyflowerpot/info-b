@@ -2,23 +2,21 @@
 # info-b
 
 
-Agenda: Problem Set 07          >50 %
+Agenda: Problem Set 07           87 %
 
 
-- 7.1 Fraction:                 100 %
-  - How to implement without constructor?
+- 7.1 Fraction:                  95 %
+  - correct test class
 
 - 7.2 Iterator:                 100 % 
-  - separate Iterator class cannot access List data fields!?
-  - test class in progress
 
-- 7.3 Visitor and Visitable:     ?? %
+- 7.3 Visitor and Visitable:    100 %
   - In progress...
 
-- 7.4 Visitor and file system:    0 %
+- 7.4 Visitor and file system:   90 %
   - ...
   
-- 7.5 Search:                     0 %
+- 7.5 Search:                    50 %
   - ...
   
 - 7.6 Questions:                  ∞ %

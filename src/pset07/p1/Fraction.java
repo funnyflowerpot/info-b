@@ -24,7 +24,7 @@ public class Fraction extends Number {
     * follows the singleton design pattern internally, so leaving out a
     * getInstance()-method.
     */
-   private static Map<String, Fraction> instPool;
+   private static Map<Double, Fraction> instPool;
    
    /**
     * Creates greatest common divisor for a and b.
@@ -56,7 +56,7 @@ public class Fraction extends Number {
       // Formerly:
       //return new Fraction(Integer.parseInt(splitted[0]),
       //    Integer.parseInt(splitted[1]));
-      return getPoolInstance(Integer.parseInt(splitted[0]),
+      return getInstance(Integer.parseInt(splitted[0]),
           Integer.parseInt(splitted[1]));
    }
 
@@ -70,7 +70,7 @@ public class Fraction extends Number {
     * 
     * @param numerator
     */
-   public Fraction(int numerator) {
+   private Fraction(int numerator) {
       this(numerator, 1);
    }
 
@@ -81,7 +81,7 @@ public class Fraction extends Number {
     * @param numerator
     * @param denominator
     */
-   public Fraction(int numerator, int denominator) {
+   private Fraction(int numerator, int denominator) {
       if (denominator == 0) {
          throw new RuntimeException("denominator == 0 is not possible");
       }
@@ -99,41 +99,7 @@ public class Fraction extends Number {
 
       this.numerator = numerator / gcd;
       this.denominator = denominator / gcd;
-      
-      // let this instance be part of the pool
-      insertPoolInstance(this);
    }
-   
-   /**
-    * Helper method to centralize generation of keys for the instance pool.
-    * Use class StringBuilder to avoid unnecessary String instances while
-    * building the key, as suggested in its documentation.
-    * 
-    * @param num first value
-    * @param denom second value
-    * @return a string that contains both given values
-    */
-   private static String getKey(int num, int denom) {
-     int gcd = gcd(num, denom);
-     return new StringBuilder(num / gcd).append('/').append(denom / gcd)
-         .toString();
-   }
-   
-   /**
-    * Insert a fraction instance into the instance pool, if not already
-    * present. Create the pool, if not already present.
-    * 
-    * @param fraction the fraction to be inserted
-    */
-   private static void insertPoolInstance(Fraction fraction) {
-     // create the instance pool, if not already present
-      if(instPool == null)
-        instPool = new HashMap<String, Fraction>();
-      // insert fraction into pool, if not already present
-      String key = getKey(fraction.numerator, fraction.denominator);
-      if(!instPool.containsKey(key))
-        instPool.put(key, fraction);
-    }
    
    /**
     * Get a fraction instance specified by numerator and denominator. Insert
@@ -144,16 +110,21 @@ public class Fraction extends Number {
     * @param denom the denominator
     * @return a fraction contained in to the pool, newly created if necessary
     */
-   private static Fraction getPoolInstance(int num, int denom) {
+   public static Fraction getInstance(int num, int denom) {
       // create the instance pool, if not already present
       if(instPool == null)
-        instPool = new HashMap<String, Fraction>();
-      // get instance from pool or create a new instance and insert it
-      // (via constructor)
-      String key = getKey(num, denom);
-      if(instPool.containsKey(key))
-        return instPool.get(key);
-      return new Fraction(num, denom);
+        instPool = new HashMap<Double, Fraction>();
+      // get instance from pool or create a new instance and insert it into
+      // pool
+      Fraction fraction;
+      double key = (double) num / (double) denom;
+      if(instPool.containsKey(key)) {
+        fraction = instPool.get(key);
+      } else {
+        fraction = new Fraction(num, denom);
+        instPool.put(key, fraction);
+      }
+      return fraction;
     }
     
    /**
@@ -168,7 +139,7 @@ public class Fraction extends Number {
      //return new Fraction(this.numerator * addend.denominator
      //    + this.denominator * addend.numerator, this.denominator
      //    * addend.denominator);
-     return getPoolInstance(this.numerator * addend.denominator
+     return getInstance(this.numerator * addend.denominator
          + this.denominator * addend.numerator, this.denominator
          * addend.denominator);
    }
@@ -184,7 +155,7 @@ public class Fraction extends Number {
      // Formerly:
      //return new Fraction(this.numerator * another.denominator,
      //    this.denominator * another.numerator);
-     return getPoolInstance(this.numerator * another.denominator,
+     return getInstance(this.numerator * another.denominator,
          this.denominator * another.numerator);
    }
 
@@ -215,7 +186,7 @@ public class Fraction extends Number {
       // Formerly: 
       //return new Fraction(this.numerator * another.numerator, this.denominator
       //     * another.denominator);
-      return getPoolInstance(this.numerator * another.numerator, this.denominator
+      return getInstance(this.numerator * another.numerator, this.denominator
             * another.denominator);
    }
 
@@ -229,7 +200,7 @@ public class Fraction extends Number {
    public Fraction multiply(int n) {
      // Formerly:
      //return new Fraction(this.numerator * n, this.denominator);
-     return getPoolInstance(this.numerator * n, this.denominator);
+     return getInstance(this.numerator * n, this.denominator);
    }
 
    /**
@@ -261,7 +232,7 @@ public class Fraction extends Number {
      //return new Fraction(this.numerator * subtrahend.denominator
      //    - this.denominator * subtrahend.numerator, this.denominator
      //    * subtrahend.denominator);
-     return getPoolInstance(this.numerator * subtrahend.denominator
+     return getInstance(this.numerator * subtrahend.denominator
          - this.denominator * subtrahend.numerator, this.denominator
          * subtrahend.denominator);
    }

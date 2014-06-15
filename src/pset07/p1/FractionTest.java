@@ -30,15 +30,17 @@ public class FractionTest {
    */
   public static void main(String[] args) {
     
+    // TODO class Fraction was optimized. test is not correct anymore. rewrite test class
+    
     // frac1 != frac2, since "new" forces a new instance, not grabbed from
     // pool. Furthermore, it will not get inserted into pool, since there is
     // an instance already present.
     Fraction frac1 = Fraction.parseFraction("3/4");
-    Fraction frac2 = new Fraction(3, 4);
+    Fraction frac2 = Fraction.getInstance(3, 4);
     
     // frac3 == frac4, since frac3 is in pool and instance for frac4 will be
     // grabbed from pool by parseFraction()
-    Fraction frac3 = new Fraction(3, 2);
+    Fraction frac3 = Fraction.getInstance(3, 2);
     Fraction frac4 = Fraction.parseFraction("3/2");
    
     System.out.println("Now testing... FRACTIONS");
