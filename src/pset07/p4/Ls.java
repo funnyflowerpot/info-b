@@ -1,7 +1,5 @@
 package pset07.p4;
 
-import java.io.File;
-
 import javax.swing.JOptionPane;
 
 
@@ -151,7 +149,7 @@ public class Ls {
 		parseArguments(args);
 
     // FIXME: next lines only for temporary testing
-    path = ".";
+    path = "/home/stefan/doc/coxi";
     recursion = true;
     size = true;
 
@@ -161,11 +159,10 @@ public class Ls {
 
 		// TODO: check if "path" is actually a valid path (-> exists(), isDirectory()), handle exception
 		
-		// TODO (sr): next line should be included in accept(), which means accept() will change slightly
-		System.out.println(f.getPath());
+		System.out.println(f.getPath() + " (interactive directory listing)");
 		f.accept(new FileVisitor(recursion, size));
 				
-		
+		System.out.println("Thank you for travelling with Ls Airlines.");
 	}
 	
 	

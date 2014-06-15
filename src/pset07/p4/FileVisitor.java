@@ -30,9 +30,9 @@ public class FileVisitor implements Visitor<VisitableFile> {
 		// 				  this is probably 
 		// size set:
 	  
-	  for(int i = 0; i < levelOfRecursion; i++)
-	    System.out.print((i == levelOfRecursion - 1) ? "+-> " : "|   ");
-	  System.out.printf("%s", o.getName());
+	  for(int i = 0; i < levelOfRecursion - 1; i++)
+	    System.out.print("|   ");
+	  System.out.printf("+-> %s", o.getName());
 	  if(!o.isDirectory() && printSize)
 	    System.out.printf(" (%d bytes)", o.length());
 	  System.out.println();
