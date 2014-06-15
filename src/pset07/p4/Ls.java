@@ -149,7 +149,7 @@ public class Ls {
 		parseArguments(args);
 
     // FIXME: next lines only for temporary testing
-    path = "/home/stefan/doc/coxi";
+    path = ".";
     recursion = true;
     size = true;
 
