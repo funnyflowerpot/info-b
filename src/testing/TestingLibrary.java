@@ -54,7 +54,7 @@ public class TestingLibrary {
       scanner = new Scanner(System.in);
     while(true) {
       System.out.print(message);
-      input = scanner.next();
+      input = scanner.nextLine();
       for(String validAnswer : validAnswers)
         if(validAnswer.equals(input))
           return input;

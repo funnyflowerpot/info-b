@@ -1,5 +1,7 @@
 package pset07.p4;
 
+import java.io.File;
+
 import javax.swing.JOptionPane;
 
 
@@ -145,12 +147,13 @@ public class Ls {
     // ctrl+click to open implementation after hovering curser above method name.
     //args = TestingLibrary.populateProgramArguments(args);
 
-    
     // Set all flags according to arguments
 		parseArguments(args);
 
-    // FIXME: next line only for temporary testing
+    // FIXME: next lines only for temporary testing
     path = ".";
+    recursion = true;
+    size = true;
 
 		// Creates visitable file with appropriate path
     // FIXME (pw): in parseArguments(), a regex pattern gets assigned to "path"
@@ -158,6 +161,8 @@ public class Ls {
 
 		// TODO: check if "path" is actually a valid path (-> exists(), isDirectory()), handle exception
 		
+		// TODO (sr): next line should be included in accept(), which means accept() will change slightly
+		System.out.println(f.getPath());
 		f.accept(new FileVisitor(recursion, size));
 				
 		

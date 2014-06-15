@@ -1,6 +1,7 @@
 package pset07.p4;
 
 import java.io.File;
+import java.util.Arrays;
 
 import testing.TestingLibrary;
 
@@ -25,6 +26,8 @@ public class VisitableFile extends File implements Visitable<VisitableFile> {
 	@Override
 	public void accept(Visitor<VisitableFile> v) {
 
+	  VisitableFile file;
+	  String[] fileNames;
 	  String input1;
 	  String input2;
 	  
@@ -35,17 +38,18 @@ public class VisitableFile extends File implements Visitable<VisitableFile> {
 	  FileVisitor visitor = (FileVisitor) v;
 	  visitor.increaseLevelOfRecursion();
 	  
+	  // guarantee alphabetical order for directory listings
+	  fileNames = list();
+	  Arrays.sort(fileNames);
+	  
 	  // list files, since we are a directory and want our content
-	  for(File file : listFiles()) {
+	  for(String fileName : fileNames) {
 
-	    // TODO (pw): please read this comment. FYI and correct me if this is Potentially Fucking Up the Testat (PFT)
+	    file = new VisitableFile(getPath() + File.separatorChar + fileName);
+	    
 	    // Handling return value is a requirement of the visitor pattern, 
 	    // although FileVisitor always returns true.
-	    // Note: Usually, this narrowing cast is unsafe. The cast here is not 
-	    // dangerous, since VisitableFile extends File only in terms of methods
-	    // (i.e. functionality), but not in additional fields. Trying to access
-	    // non-existing fields is harmful and we are not doing that.
-	    if(!visitor.visit((VisitableFile) file))
+	    if(!visitor.visit(file))
 	      return;
 	    
 	    if(file.isDirectory() && visitor.isRecursing()) {
@@ -61,7 +65,11 @@ public class VisitableFile extends File implements Visitable<VisitableFile> {
 	      case "":
 	      case "y":
 	        // see big comment above for a note about this cast
-	        ((VisitableFile) file).accept(visitor);
+	        file.accept(visitor);
+
+	        // in accept() sometime, exit of visitation was requested
+	        if(visitor.isQuitRequested())
+            break;
 
 	        input2 = TestingLibrary.promptInput("Continue directory listing of \""
 	            + getName() + "\"? ([y],q) ", new String[]{"", "y", "q"});

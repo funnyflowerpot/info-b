@@ -31,13 +31,13 @@ public class FileVisitor implements Visitor<VisitableFile> {
 		// size set:
 	  
 	  for(int i = 0; i < levelOfRecursion; i++)
-	    System.out.println("| ");
-	  System.out.print(o.getName());
+	    System.out.print((i == levelOfRecursion - 1) ? "+-> " : "|   ");
+	  System.out.printf("%s", o.getName());
 	  if(!o.isDirectory() && printSize)
-	    System.out.printf("(%d)", o.length());
+	    System.out.printf(" (%d bytes)", o.length());
 	  System.out.println();
 	  
-		return false;
+		return true;
 	}
 
   public boolean isQuitRequested() {
