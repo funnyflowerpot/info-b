@@ -2,25 +2,21 @@
 # info-b
 
 
-Agenda: Problem Set 07          102 % (according to new math)
+Agenda: Problem Set 08          70 % 
 
 
-- 7.1 Fraction:                 100 %
-  -	(sr) correct test class 
+  8.1 Streams:                 	60 %
 
-- 7.2 Iterator	                100 % 
+  -	Almost finished Reader
+  	class
+  - TODO: Command line 
+  	program
+  	
+  8.2 Search and Replace:		90 %	
+   
+   - see FIXME
 
-- 7.3 Visitor and Visitable:    100 %
+  8.3 Persistent Array			 0 %
   
-
-- 7.4 Visitor and file system:  100 %
-
-  
-- 7.5 Search:                   100 %
-  - about to get riegl'd
-  
-- 7.6 Questions:                  ∞ %
-  - to kill a mocking bird
-  
-  yaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaay
-  
+  	- to be riegled   
+   
