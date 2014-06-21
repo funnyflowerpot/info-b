@@ -24,7 +24,7 @@ public class PersistentArray<T> implements AutoCloseable {
   
   
   public PersistentArray(String filepath) throws IOException {
-    loadArrayFromFile(filepath);
+    elements = loadArrayFromFile(filepath);
     setupOutputStream(filepath);
   }
   

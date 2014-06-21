@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Scanner;
 
 import testing.TestingLibrary;
 
@@ -167,7 +166,7 @@ public class PersistentArrayTest {
       PersistentArray<Integer> pa2 = new PersistentArray<Integer>(tempFile1.getAbsolutePath());
       
       fileContent1 = byteArrayToString(getFileContent(tempFile1));
-      arrayString1 = persistentArrayToString(pa1);
+      arrayString1 = persistentArrayToString(pa2);
       // we take values of following lines from before
       //fileContent2 = byteArrayToString(getFileContent(tempFile1));
       //arrayString2 = persistentArrayToString(pa1);
