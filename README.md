@@ -2,21 +2,23 @@
 # info-b
 
 
-Agenda: Problem Set 08          70 % 
+Agenda: Problem Set 08          65 % 
 
 
-  8.1 Streams:                 	60 %
-
-  -	Almost finished Reader
-  	class
-  - TODO: Command line 
-  	program
+  8.1 Streams:                 	99 %
+	- to be checked by 'sr'
   	
-  8.2 Search and Replace:		90 %	
+  8.2 Search and Replace:		99 %	
    
-   - see FIXME
+   - to be checked by 'sr'
 
-  8.3 Persistent Array			 0 %
+
+  8.3 Persistent Array			-4 %
+  [-] iterator?
+  [X] testklasse
+      [ ] dokumentation
+  [X] arrayklasse
+      [ ] dokumentation
   
-  	- to be riegled   
-   
+  [X] wäsche aufhängen
+  

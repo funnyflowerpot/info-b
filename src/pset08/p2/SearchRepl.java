@@ -14,13 +14,112 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * Command-Line Program which is able to (recursively) go through given
- * directories and output the names of those files that match a given pattern.
+ * directories and find all files that match a pattern
+ * it will replace all occurrences of a given regex in those files.
  * 
- * @author Mathias Menninghaus (mathias.menninghaus@uos.de)
+ * @author mmenninghaus, pwicke, sriegl
  * 
  */
-public class Search {
+public class SearchRepl {
 
+   private static class FileSRVisitor extends FileVisitorAdapter {
+      private final FileFilter filter;
+      private final boolean recursive;
+      private final String search;
+      private final String replacement;
+
+      private FileSRVisitor(final FileFilter filter, final boolean recursive, final String search, final String replacement) {
+         this.filter = filter;
+         this.recursive = recursive;
+         this.search = search;
+         this.replacement = replacement;
+      }
+
+      @Override
+      public FileVisitResult preVisitDirectory(File dir) {
+         if (recursive) {
+            return FileVisitResult.CONTINUE;
+         } else {
+            return FileVisitResult.SKIP_SUBTREE;
+         }
+      }
+
+      @Override
+      public FileVisitResult visitFile(File file) {
+
+    	 /*
+    	  * This is where the replacing takes place.
+    	  * Feasible input: -r -p thehobbit.txt Gollum Smeagol
+    	  * 				-r -p .*\.txt Smeagol Gollum
+    	  */
+    	  
+         if (filter.accept(file)) {
+        	 
+        	 // Initialise a String that will later be the new text
+        	 String inputString = "";
+        	 // Define appropriate line separator
+        	 final String SEP = System.getProperty("line.separator");
+        	 
+        	 // Create input string: file->FileStream->InputStream->BufferedStream
+        	 try(
+        		FileInputStream filein = new FileInputStream(file);	
+        		InputStreamReader inread = new InputStreamReader(filein);
+        		BufferedReader buffread = new BufferedReader(inread);
+        		)
+        	{
+        		// currentLine: The current line in the file        		
+        		String currentLine = "";
+        		
+        		do{ // read current line
+        			currentLine = buffread.readLine();
+        			// as long as it is not empty
+        			if(currentLine != null){
+        				// if adding the FIRST line, do not append line separator
+        				if(inputString == "")
+        					inputString = currentLine;
+        				// after the first line, always add separator before appending next line
+        				else
+        					inputString = inputString + SEP + currentLine;
+        			}
+        		// do so, until you reach the end of the file
+           		}while(currentLine != null);	
+        		
+        		// Replace all occurrences of regex 'search' with 'replacement' string   		
+        		inputString = inputString.replaceAll(search, replacement);
+        		// The input string is now corrected with all replacements and line separators
+
+        	} catch (IOException e){
+        		e.printStackTrace();
+        	}
+        	 
+        	 //Create Output
+        	 try(
+        			 FileOutputStream fileout = new FileOutputStream(new File(file.getAbsolutePath()));
+        			 OutputStreamWriter streamout	= new OutputStreamWriter(fileout);
+             		 BufferedWriter bufout = new BufferedWriter(streamout);       			 
+        			 )
+        	{
+        		 // write new String in output stream
+        		 bufout.write(inputString);
+                 
+        	}catch (IOException e){
+        		e.printStackTrace();
+        	}
+
+         }
+         return FileVisitResult.CONTINUE;
+      }
+   }
+   
+   /**
+    * Print a short description of the usage of this program on the standard
+    * output.
+    */
+   private static void printUsage() {
+      System.out
+            .println("Usage: java io.Search [-r] [-p FilePattern] Search Replacement {FilesAndDirectories}");
+   }   
+   
    /**
     * Handles an error in this program by printing the error message and a
     * description of the usage of the program on the standard output. It then
@@ -122,100 +221,4 @@ public class Search {
          handleError("Pattern Syntax is illegal: \n" + e.getMessage());
       }
    }
-
-   /**
-    * Print a short description of the usage of this program on the standard
-    * output.
-    */
-   private static void printUsage() {
-      System.out
-            .println("Usage: java io.Search [-r] [-p FilePattern] Search Replacement {FilesAndDirectories}");
-   }
-
-   private static class FileSRVisitor extends FileVisitorAdapter {
-      private final FileFilter filter;
-      private final boolean recursive;
-      private final String search;
-      private final String replacement;
-
-      private FileSRVisitor(final FileFilter filter, final boolean recursive, final String search, final String replacement) {
-         this.filter = filter;
-         this.recursive = recursive;
-         this.search = search;
-         this.replacement = replacement;
-      }
-
-      @Override
-      public FileVisitResult preVisitDirectory(File dir) {
-         if (recursive) {
-            return FileVisitResult.CONTINUE;
-         } else {
-            return FileVisitResult.SKIP_SUBTREE;
-         }
-      }
-
-      @Override
-      public FileVisitResult visitFile(File file) {
-
-    	 /* FIXME: file pattern
-    	  * 	   the program does not recognize *.txt neither in console nor in eclipse 
-    	  * This is where the replacing takes place.
-    	  * Sample input: -r -p thehobbit.txt Gollum Smeagol
-    	  */
-         if (filter.accept(file)) {
-        	 
-        	 // Initialise a String that will later be the new text
-        	 String inputString = "";
-        	 final String SEP = System.getProperty("line.separator");
-        	 
-        	 // Create input string: file->FileStream->InputStream->BufferedStream
-        	 try(
-        		FileInputStream filein = new FileInputStream(file);	
-        		InputStreamReader inread = new InputStreamReader(filein);
-        		BufferedReader buffread = new BufferedReader(inread);
-        		)
-        	{
-
-        		// currentLine: The current line in the file        		
-        		String currentLine = "";
-        		// as long as there is a line, append line separator and line to inputString 
-        		do{
-        			currentLine = buffread.readLine();
-        			
-        			if(currentLine != null){
-        				// The first line is empty paste corrected string
-        				if(inputString == "")
-        					inputString = currentLine;
-        				else	// From the second line paste after separator
-        					inputString = inputString + SEP + currentLine;
-        			}
-           		}while(currentLine != null);	
-        		
-        		// Replace all occurences of regex 'search' with 'replacement' string   		
-        		inputString = inputString.replaceAll(search, replacement);
-        		// The input string is now corrected with all replacements and line separators
-
-        	} catch (IOException e){
-        		e.printStackTrace();
-        	}
-        	 
-        	 //Create Output
-        	 try(
-        			 FileOutputStream fileout = new FileOutputStream(new File(file.getAbsolutePath()));
-        			 OutputStreamWriter streamout	= new OutputStreamWriter(fileout);
-             		 BufferedWriter bufout = new BufferedWriter(streamout);       			 
-        			 )
-        	{
-        		 // write new String in output stream
-        		 bufout.write(inputString);
-                 
-        	}catch (IOException e){
-        		e.printStackTrace();
-        	}
-
-         }
-         return FileVisitResult.CONTINUE;
-      }
-   }
-
 }

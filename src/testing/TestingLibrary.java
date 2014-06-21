@@ -38,6 +38,7 @@ public class TestingLibrary {
       dangerousCode.run();
     } catch(Exception e) {
       testSuccessful = true;
+      message = message + ": " + e.getMessage();
     }
 
     printTest(testSuccessful, message, args);

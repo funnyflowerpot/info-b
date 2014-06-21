@@ -1,0 +1,16 @@
+java reader/SearchLines "and" < reader/thehobbit.txt
+
+1x match in line 4 found:"Over the mountains and seas to the old hill"
+1x match in line 13 found:"The dying dragon brought trouble and pain"
+2x match in line 17 found:"Ice and fire and forest we passed"
+The pattern "and" could be found 3 times.
+
+java reader/SearchLines "dragon" < reader/thehobbit.txt
+
+1x match in line 6 found:"Where the old dragon sleeps"
+1x match in line 13 found:"The dying dragon brought trouble and pain"
+The pattern "dragon" could be found 2 times.
+
+java reader/SearchLines "hobbit" < reader/thehobbit.txt
+
+The pattern "hobbit" could be found 0 times.
