@@ -1,0 +1,62 @@
+Testat Nr.04 – SS14
+Stefan Riegl, Philipp Wicke: Mo. 11.30
+Aufgabe 4.1: Dynamisches Binden
+Zuerst wird in der BoatRental.class main-Methode eine Instanz vom Typ MotorBoat erzeugt, mit einer Referenz namens myMotorboat:
+	MotorBoat myMotorBoat = new MotorBoat();
+Nun folgt der Aufruf zum Drucken von myMotorBoat.typ
+	System.out.println("myMotorBoat.typ         : " + myMotorBoat.typ);
+	(im Weiteren als „Eingabe“ bezeichnet)
+Hierbei wird auf die Instanzvariable der Referenz von myMotorBoat zugegriffen. Diese ist nach der Instazierung immer “motorboat“, siehe:
+	public String typ = "motorboat";
+	[in der MotorBoat.class]
+Daraus folgt die 1. Ausgabe: myMotorBoat.typ			: motorboat
+Nun wird folgende Eingabe getaetigt: ((Boot)myMotorBoat).typ
+Also wird hier myMotorBoat als Boot getypcastet. Das bedeutet, dass nun auf die Instanzvariable der Oberklasse (Boat.class) zugegriffen wird und nicht mehr auf die Instanzvariable der Subklasse. MotorBoat extends Boat. Also ist der typcast in diesem Fall zulaessig und die Instanzvariable der Boot.class wird ausgegeben.
+	public String typ = "boat";
+	[in der Boat.class]
+liefert die zweite Ausgabe: ((Boot)myMotorBoat).typ : boat
+Es folgt die Eingabe: myMotorBoat.getTyp()
+Hierbei wird auf die Methode getTyp() der Klasse myMotorBoat zugegriffen. Diese liefert wie zu erwarten den Typ des Bootes zurueck oder wie hier direkt zu sehen:
+	public String getTyp() {
+      return typ;
+      [in der MotorBoat.class]
+Also erhalten wir die Ausgabe: motorboat
+Nun folgt die Eingabe: myMotorBoat.getTyp2() 
+Diese sorgt fuer den Aufruf der getTyp2()-Methode:
+public String getTyp2() {
+    return super.getTyp2();
+    [in der MotorBoat.class]
+Hierbei wird die Super-Methode getTyp2 aufgerufen, also die Methode getTyp2 in der Klasse Boat (die Oberklasse von Motorboat). 
+   public String getTyp2() {
+      return getTyp();
+    [in der Boat.class]
+Diese jedoch ruft lediglich nach der getTyp()-Methode. Da hier nicht nach this.getTyp() gerufen wird, wird wie bei der Eingabe zuvor die getTyp()-Methode der Motorboat.class (!) aufgerufen und liefert wieder: motorboat
+
+Nun kommt die Eingabe: myCanoe.typ            
+Vor dieser Eingabe jedoch wird eine Instanz vom Typ Canoe instanziiert und mit myCanoe referenziert: Canoe myCanoe = new Canoe();
+Der Aufruf richtet sich an die Instanzvariable typ. Hier wird also direkt auf das String Datenfeld zugegriffen, welches canoe ausgibt.
+Also wir hier: public String typ = "canoe";
+        [in der Canoe.class] angesprochen.
+Nun folgt der Aufruf: myCanoe.getTyp()
+myCanoe verweist auf ein Objekt vom Typ Canoe. Und der Aufruf beginnt zuerst nach der Methode getTyp() in der Canoe.class zu suchen. Dort ist keine Methode mit dieser Signatur. Also wird die Superklasse – Boat.class – konsultiert, weil Canoe extends Boat. In dieser Klasse findet sich:
+public String getTyp() -
+      		return typ;
+	[in der Boat.class]
+Nun wird dementsprechend die Instanzvariable der Boat Klasse zurueckgegeben, naemlich: boat.
+Es folgt der Aufruf: myCanoe.getTyp2();
+Dieser wird in der Canoe.class folgende Methode ansprechen:
+public String getTyp2() {
+     	 return super.getTyp2(); 
+Also wird somit die getTyp2()-Methode der Oberklasse – Boat.class – aufgerufen. Diese tut folgendes:
+	public String getTyp2() {
+     	 return getTyp();
+Man sieht, dass nun wieder die getTyp() Methode verlangt wird. Zwar wird auch hier nicht explizit per this.getTyp() die Methode der Boat.class aufgerufen, dennoch ist es diese Methode die die verwendet wird, da getTyp() nicht in der Canoe.class ueberschrieben wurde. Somit wird erst die Methode getTyp() in der Canoe.class gesucht, dann nach dem Nichtauffinden wird die getTyp()-Methode der Boat.class verwendet, welche wie schon bekannt, die folgende Ausgabe zurueckliefert: boat
+Nun geschieht folgende Referenzierung: Boat myBoat = myCanoe;
+Hierbei wird eine Referenz vom Typ Boat mit Namen myBoat zur Referenz eines Canoe Objekts mit Namen myCanoe. Da wir auf der linken Seite die Generalisierung und auf der rechten Seite die Spezialisierung haben, ist diese Zuweisung zulaessig.
+Es folgt der Aufruf: myBoat.typ bei dem nun zuerst die Instanzvariable des Referenztyps gesucht wird. Da myBoat von einer Boat Referenz ist wird der .typ also aus der Boat Klasse geschoepft – dies fuehrt zur Ausgabe von: boat.
+Der naechse Aufruf ist: myBoat.getTyp() dieser beginnt nun wieder seine Suche nach der Methode getTyp() bei dem Referenztyp, also der Boat.class und findet:
+public String getTyp() {
+      		return typ;
+	[in der Boat.class]
+Dieser gibt also die Instanzvariable der Boat.class aus: boat
+Als Letztes kommt die Eingabe: ((Canoe)myBoat.)typ hierbei wird getypcastet. Also wird explizit bestimmt, dass myBoat als Typ Canoe verstanden werden soll, somit wird bei der Suche nach dem .typ nicht in der Boat.class, sondern in, nach der gecasteten, Canoe.class gesucht. Hier wird also der String der Instanzvariablen typ ausgegeben: canoe 
