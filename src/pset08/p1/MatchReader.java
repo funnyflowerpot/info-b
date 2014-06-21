@@ -8,16 +8,15 @@ import java.util.regex.Matcher;
 public class MatchReader extends LineNumberReader {
 	
 	private String lastLine = null;
-
+	private String regex	= null;
+	
 	public MatchReader(Reader arg0) {
 		super(arg0);
 	}
 
-	public MatchReader(Reader arg0, int arg1) {
-		
-		// TODO:   super(reader);
-		//  pat= Pattern.compile(p);
-		super(arg0, arg1);
+	public MatchReader(Reader reader, String regex) {
+		super(reader);
+		setRegex(regex);
 	}
 	
 	
@@ -28,14 +27,17 @@ public class MatchReader extends LineNumberReader {
 	}
 	
 
-	public int getAmountofMatches(Pattern regex){
+	public int getAmountofMatches(){
+		// set match counter to 0
 		int countMatch = 0;
-		
+		// initialise a pattern with constructor given regex
+		Pattern regex = Pattern.compile(this.regex);
+		// initialise a matcher that matches regex pattern and the last line
 		Matcher matcher = regex.matcher(lastLine);
-		
+		// as long as the matcher can find a match in the line, increment the count
 		while(matcher.find())
 			countMatch++;
-		
+		// return the match counter
 		return countMatch;
 	}
 
@@ -45,6 +47,14 @@ public class MatchReader extends LineNumberReader {
 
 	public void setLastLine(String lastLine) {
 		this.lastLine = lastLine;
+	}
+
+	public String getRegex() {
+		return regex;
+	}
+
+	public void setRegex(String regex) {
+		this.regex = regex;
 	}
 	
 
