@@ -2,6 +2,7 @@ package pset08.p1;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
+import java.nio.CharBuffer;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.regex.PatternSyntaxException;
@@ -11,6 +12,10 @@ import java.util.regex.PatternSyntaxException;
  * According to the Decorator Pattern this reader allows to read a line of the 
  * given stream, it allows to get the line number and to count the matches, found in
  * one line.
+ * 
+ * All inherited read()-methods are not implemented, since this class should and will 
+ * operate line-wise only. This is okay, since no read()-method call happens within
+ * this project (pset08.p1) and implementing unused features is a sin of efficiency.
  * 
  * @author sriegl, pwicke
  * @date 20.06.2014
@@ -52,6 +57,26 @@ public class MatchReader extends LineNumberReader {
 		return buffer;
 	}
 	
+	@Override
+	public int read() throws IOException {
+	  throw new UnsupportedOperationException("MatchReader must be used with readLine() only.");
+	}
+	
+  @Override
+  public int read(char[] cbuf) throws IOException {
+    throw new UnsupportedOperationException("MatchReader must be used with readLine() only.");
+  }
+  
+  @Override
+  public int read(CharBuffer target) throws IOException {
+    throw new UnsupportedOperationException("MatchReader must be used with readLine() only.");
+  }
+  
+  @Override
+  public int read(char[] arg1, int arg2, int arg3) throws IOException {
+    throw new UnsupportedOperationException("MatchReader must be used with readLine() only.");
+  }
+  
 	/**
 	 * This method will check the amount of matches of stream and regular expression
 	 * It will return the number of matches

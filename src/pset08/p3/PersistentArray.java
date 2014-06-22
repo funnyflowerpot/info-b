@@ -29,11 +29,32 @@ public class PersistentArray<T> implements AutoCloseable {
   }
   
   
+  /**
+   * Update the underlying file and avoid creating new ObjectOutputStream
+   * instances. This will be achieved by putting the internal "file pointer"
+   * of the RandomAccessFile instance back to a position where it will
+   * override the lastly written array.
+   * 
+   * For more details of the Object Serialization Stream Protocol, see here:
+   * 
+   * http://docs.oracle.com/javase/7/docs/platform/serialization/spec/protocol.html
+   * 
+   * @throws IOException
+   */
   private void updateFile() throws IOException {
     try {
+      // At the beginning of each ObjectOutputStream, there is a preamble of
+      // two shorts (magic value and version), that gets inserted with the
+      // creation of ObjectOutputStream. When re-writing the array, skip past
+      // preamble (Short.SIZE is length of a "short" in bits).
       raf.seek(Short.SIZE / 8 * 2);
       oos.writeObject(elements);
+      // force writing to file, to have data save even if stream could not be
+      // closed (and flushed before) properly
       oos.flush();
+      // reset internal references list, which causes ObjectOutputStream to
+      // actually writes a full representation of the array and not just a
+      // reference to a formerly printed one
       oos.reset();
     } catch (IOException e) {
       throw new IOException("Could not update array file: " + e.getMessage());
