@@ -6,10 +6,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.RandomAccessFile;
+import java.io.Serializable;
 import java.util.Arrays;
 
 // TODO doc
-public class PersistentArray<T> implements AutoCloseable {
+public class PersistentArray<T extends Serializable> implements AutoCloseable {
 
   private RandomAccessFile raf;
   private ObjectOutputStream oos;
@@ -74,6 +75,7 @@ public class PersistentArray<T> implements AutoCloseable {
   }
   
   
+  @SuppressWarnings("unchecked")
   private T[] loadArrayFromFile(String filepath) throws IOException {
     try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath))) {
       return (T[]) ois.readObject();
