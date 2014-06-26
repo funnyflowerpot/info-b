@@ -44,7 +44,7 @@ private static final int DEFAULT_INITIAL_CAPACITY = 11;
     */
    // This field must not be serialized, therefore it is designated 'transient'
    private transient Object[] heap;
-
+   // This field as well is 'transient'
    private transient int size = 0;
 
    private final Comparator<? super E> comparator;
@@ -74,46 +74,58 @@ private static final int DEFAULT_INITIAL_CAPACITY = 11;
    }
    
    /**
-    * TODO: JavaDoc
-    * @param out
-    * @throws IOException
+    * This method implements the serialize method writeObject for the ObjectOutputStream
+    * It initialises a new heap, with the size of the actual elements in the array.
+    * A normal initialization would extend the heap with null pointern for unused nodes.
+    * @param out of type <code>ObjectOutputStream</code> is the Stream in which you want to
+    * write the Object into.
+    * @throws <code>IOException</code> Any exception thrown by the underlying OutputStream
     */
    private void writeObject(ObjectOutputStream out) throws IOException {
-	   Object[] realHeap= new Object[size()];
-	   // saves all existing objects in this Heap
-	   for(int i=0; i < size(); i++){
-//		   System.out.println("Size = "+size);
-//	   	   System.out.println("heap["+i+"]= "+heap[i]);
-		   realHeap[i] = heap[i];
+	   // initialise a heap that has the size to the actual 
+	   // corresponding number of elements in the heap
+	   Object[] realHeap= new Object[this.size()];
+	   // saves all existing objects in this Heap:
+	   // We've left the realm of the heap and we are on
+	   // array grounds, so we simply copy each element
+	   // of this.heap (these are objects) into an
+	   // array of the size corresponding to the number
+	   // of elements, therefore we avoid null pointer	   
+	   for(int i=0; i < this.size(); i++){
+		   realHeap[i] = this.heap[i];
 	   }
-	    
-	   out.writeObject(realHeap);	// Serialize realHeap, such that we
-	   								// can call: heap.writeObject(out);
-//	   System.out.println("Finished Serializing!");
+	   // use the serialize method to write the heap in our stream
+	   out.writeObject(realHeap);	
    }
    /**
-    * TODO: JavaDoc
- * @throws IOException 
+    * This is a protected entry to the serialise method writeObject, such that
+    * a test class can call it from outside of this class.
+    * @throws <code>IOException</code> Any exception thrown by the underlying OutputStream
     */
    protected void specialSerialize(ObjectOutputStream out) throws IOException{
 	   writeObject(out);
    }
 	
    /**
-    * TODO: JavaDoc
-    * @param in
-    * @throws ClassNotFoundException
-    * @throws IOException
+    * This is the method provided to read from a given ObjectInputStream
+    * @param in <code>ObjectInputStream</code> The stream you want to read from
+    * @throws <code>ClassNotFoundException</code> no definition for the class with
+    * the specified name could be found
+    * @throws <code>IOException</code> Any Exception thrown by the underlying stream
     */
 	private void readObject(ObjectInputStream in) throws ClassNotFoundException, IOException{
 	    
-		// assigns this heap with the deserialized object
+		// assigns this heap with the deserialised object
 	    this.heap = (Object[]) in.readObject();
 	    // give the size
 	    this.size = heap.length ;
 	}
-
-   protected void specialDeserialize(ObjectInputStream in) throws ClassNotFoundException, IOException{
+	/**
+	 * This is a protected entry to the deserialise method readObject, such that
+	 * a test class can call it from outside of this class.
+	 * @throws <code>IOException</code> Any exception thrown by the underlying InputStream
+	 */
+	protected void specialDeserialize(ObjectInputStream in) throws ClassNotFoundException, IOException{
 	   readObject(in);
    }
    

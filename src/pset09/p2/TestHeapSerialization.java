@@ -9,8 +9,8 @@ import java.io.ObjectOutputStream;
 /**
  * This test class will initialise two <code>Integer Heaps</code>.
  * Then it will use the <code>specialSerialize()</code> and <code>specialDeserialize()</code>.
- * After this process it will translate the content into a String (this will flush the heap).
- * In the end the Strings will be compared, testing the implementation.
+ * After this process it will translate the content into a String (this will empty the heap).
+ * In the end the <code>Strings</code> will be compared, testing the implementation.
  * @author Wicke
  * @date 26.06.2014 
  */
@@ -23,7 +23,7 @@ public class TestHeapSerialization {
  		
 		// Feed both heaps with the same integer values from 0-42
 		for (int i = 0; i < 43; i++){
-			serializedHeap.insert(i);
+			serializedHeap.insert(i);						
 			untouchedHeap.insert(i);
 			}
 
