@@ -2,25 +2,18 @@
 # info-b
 
 
-Agenda: Problem Set 08          65 % 
+Agenda: Problem Set 09            xx % 
 
-
-  8.1 Streams:                 	99 %
-	- to be checked by 'sr'
-  	
-  8.2 Search and Replace:		99 %	
-   
-   - to be checked by 'sr'
-
-
-  8.3 Persistent Array			-4 %
-  [-] iterator?
-  [X] testklasse
-      [ ] dokumentation
-  [X] arrayklasse
-      [ ] dokumentation
+- 9.1 Standard-Serialisierung     90 %
+  - review
   
-  [X] wäsche aufhängen
+- 9.2 Spezielle Serialisierung    90 %
+  - review
   
-  ICH ESSE JETZT! ICH ESSE JETZT!ICH ESSE JETZT!ICH ESSE JETZT!
-  n guten
+- 9.3 Threads und Ströme          85 %
+  - complete docs
+  - review
+  
+- 9.4 Spezielle Threads           -2 %
+  - to be done
+  

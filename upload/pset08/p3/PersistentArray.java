@@ -9,7 +9,7 @@ import java.io.RandomAccessFile;
 import java.io.Serializable;
 import java.util.Arrays;
 
-
+// TODO doc
 /**
  * @author pwicke, sriegl
  *
@@ -206,4 +206,3 @@ public class PersistentArray<T extends Serializable> implements AutoCloseable {
   }
   
 }
-
