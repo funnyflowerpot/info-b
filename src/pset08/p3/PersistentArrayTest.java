@@ -8,30 +8,38 @@ import java.util.Arrays;
 import testing.TestingLibrary;
 
 /**
- * @author sriegl
+ * @author pwicke, sriegl
  *
+ * Test PersistentArray on Herz and Nieren.
  */
 public class PersistentArrayTest {
   
   
-  private static String persistentArrayToString(PersistentArray<Integer> array) {
-    StringBuilder builder = new StringBuilder();
-    for(int i = 0; i < array.size(); i++)
-      builder.append(i == 0 ? "[" : ", ").append(array.getElement(i));
-    return builder.append("]").toString();
-  }
-  
+  /**
+   * Helper method to print file contents. This method is quick and dirty, as
+   * it serves only for files smaller than 1kb, which is sufficient for our
+   * tests.
+   * 
+   * @param file file to be printed
+   * @return byte array containing file contents
+   */
   private static byte[] getFileContent(File file) {
     try (FileInputStream fis = new FileInputStream(file)) {
       byte[] buffer = new byte[1024]; // will be large enough for our tests      
       int readBytes = fis.read(buffer, 0, 1024);
-      return Arrays.copyOf(buffer, readBytes);
+      return Arrays.copyOf(buffer, readBytes); // crop unnecessary elements
     } catch (IOException e) {
       System.err.println("Warning: Could not print file content. Continueing.");
       return new byte[0];
     }
   }
   
+  /**
+   * Helper method that does, what its name claims. In hex code.
+   * 
+   * @param data data that is to be converted
+   * @return stringified version of data
+   */
   private static String byteArrayToString(byte[] data) {
     StringBuilder builder = new StringBuilder();
     for(byte b : data)
@@ -39,6 +47,11 @@ public class PersistentArrayTest {
     return builder.toString();
   }
   
+  /**
+   * This is where the magic happens.
+   * 
+   * @param args command line arguments
+   */
   public static void main(String[] args) {
     try {
       
@@ -90,11 +103,11 @@ public class PersistentArrayTest {
       final PersistentArray<Integer> pa1 = new PersistentArray<Integer>(data, tempFile1.getAbsolutePath());
       
       fileContent1 = byteArrayToString(getFileContent(tempFile1));
-      arrayString1 = persistentArrayToString(pa1);
+      arrayString1 = pa1.toString();
       pa1.setElement(2, 4);
       pa1.setElement(3, 5);
       fileContent2 = byteArrayToString(getFileContent(tempFile1));
-      arrayString2 = persistentArrayToString(pa1);
+      arrayString2 = pa1.toString();
       
       TestingLibrary.printTest(!fileContent1.equals(fileContent2), 
           "changing array changes file content",
@@ -106,11 +119,11 @@ public class PersistentArrayTest {
        */
 
       fileContent1 = byteArrayToString(getFileContent(tempFile1));
-      arrayString1 = persistentArrayToString(pa1);
+      arrayString1 = pa1.toString();
       // following change already happened
       pa1.setElement(3, 5);
       fileContent2 = byteArrayToString(getFileContent(tempFile1));
-      arrayString2 = persistentArrayToString(pa1);
+      arrayString2 = pa1.toString();
       
       TestingLibrary.printTest(fileContent1.equals(fileContent2), 
           "modifying array with same values does not change file content",
@@ -166,7 +179,7 @@ public class PersistentArrayTest {
       PersistentArray<Integer> pa2 = new PersistentArray<Integer>(tempFile1.getAbsolutePath());
       
       fileContent1 = byteArrayToString(getFileContent(tempFile1));
-      arrayString1 = persistentArrayToString(pa2);
+      arrayString1 = pa2.toString();
       // we take values of following lines from before
       //fileContent2 = byteArrayToString(getFileContent(tempFile1));
       //arrayString2 = persistentArrayToString(pa1);
@@ -174,6 +187,8 @@ public class PersistentArrayTest {
       TestingLibrary.printTest(fileContent1.equals(fileContent2), 
           "restored array equals last array we had",
           arrayString1, arrayString2);
+      
+      pa2.close();
       
       
       /*
