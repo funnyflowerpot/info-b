@@ -17,12 +17,15 @@ import java.util.HashMap;
  * @author Mathias Menninghaus (mathias.menninghaus@uos.de)
  * 
  */
+// TODO describe why warning suppressed
 @SuppressWarnings("unchecked")
+// TODO when serializing internal hashmap, class Fibonacci needs not implementing Serializable
 public class Fibonacci implements Serializable{
 
    /**
 	 * Standard Serializenumber
 	 */
+  // TODO regenerate unique UID (delete field, let eclipse generate in tool-tip-menu)
 	private static final long serialVersionUID = 1L;
 	
 	private static HashMap<Integer, Long> fibonacciHash;
@@ -31,6 +34,11 @@ public class Fibonacci implements Serializable{
    /**
     * Fill HashMap with initial key-value-pairs.
     */
+	// TODO static-block, see below
+	// having a static-block is not that desirable (strange, given implementation
+	// by Matthias), but having an even bigger static-block should be avoided i think.
+	// otherwise this would involve _big_ changes in the internal design of this class
+	// http://wierdnwildcreatures.wikia.com/wiki/File:Scylla_%26_Charybdis.jpg
    static {
 	   // Initialise a File Object with name of savedHash
 	   File savedHash = new File("savedHash.ser");
@@ -45,6 +53,11 @@ public class Fibonacci implements Serializable{
 	   }
 	   else{ // If there already exists a file containing a HashMap
 		   
+	     // TODO nice to have conventional extension ".ser"
+	     // FIXME since filename is used at different places, moving file name 
+	     // into a final static field would be desirable
+	     // TODO proposal: next two lines could be merged into one (matter of taste)
+	     // try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("savedHash.ser"))) {
 		   try(FileInputStream fis = new FileInputStream("savedHash.ser");
 			   ObjectInputStream ois = new ObjectInputStream(fis);) 
 		   {
@@ -59,6 +72,7 @@ public class Fibonacci implements Serializable{
 			// Deserialization look for concrete class and builds the object according to class
 		   } catch (ClassNotFoundException e) {
 			e.printStackTrace();
+			// TODO nice explanation
 			/*
 			 * At this point the fibonacciHash as a final field would need to be
 			 * initialised, this cannot be guaranteed at this point. A finally block
@@ -72,7 +86,7 @@ public class Fibonacci implements Serializable{
    
    /**
     * Saves the current HashMap to the File
- 	*/
+   	*/
    private static void saveHashMap(){
 	// Save the initialised HashMap to a file with the correct name
 	   // Streams: File<--FileOutputStream<--ObjectOutputStream<--write HashMap in OOS
@@ -139,6 +153,7 @@ public class Fibonacci implements Serializable{
    }
 
    private static void printUsage() {
+     // TODO Matthias! vowels are not expensive. duh. (same holds for javadoc o_O)
       System.out.println("java calc/Fiboncci n");
       System.out.println("n must be a natural number >= 0");
    }
