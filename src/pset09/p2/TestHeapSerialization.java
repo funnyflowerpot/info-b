@@ -17,6 +17,7 @@ import java.io.ObjectOutputStream;
  */
 public class TestHeapSerialization {
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 		// Initialise two heaps
 		Heap<Integer> serializedHeap = new Heap<Integer>();
@@ -35,7 +36,7 @@ public class TestHeapSerialization {
 			ObjectOutputStream oout = new ObjectOutputStream(fout);)
 		{
 			// SERIALIZE:
-			serializedHeap.specialSerialize(oout);
+			oout.writeObject(serializedHeap);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -46,15 +47,15 @@ public class TestHeapSerialization {
 			ObjectInputStream ois = new ObjectInputStream(fis);)
 			{
 			// DESERIALIZE:
-			serializedHeap.specialDeserialize(ois);
+			serializedHeap = (Heap<Integer>) ois.readObject();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		// Now read both Strings:
-		String serializedString = serializedHeap.tradeHeapForString();
-		String untouchedString  = untouchedHeap.tradeHeapForString();
+		String serializedString = tradeHeapForString(serializedHeap);
+		String untouchedString  = tradeHeapForString(untouchedHeap);
 		// Compare both Strings, if they match the Serialization was successful.
 		System.out.format("Test: %s\n", serializedString.matches(untouchedString) ? "[OK]" : "[FAIL]");
 		
@@ -62,6 +63,33 @@ public class TestHeapSerialization {
 		System.out.println("String 01:"+serializedString);
 		System.out.println("String 02:"+untouchedString);
 		*/
+	}
+	
+	
+	/**
+	 * This method will return the given heap as <code>String</code>.
+	 * It will empty the heap. Improvement: One could implement a
+	 * deep copy and copy the heap before reading it out in order to
+	 * prevent destruction of heap. But as this method is for testing
+	 * use only, it will destroy the heap. 
+	 * @param heap <code>Generic Heap</code> that you want to trade for a String
+	 * @return <code>String</code> with the elements of the heap
+	 * @throws <code>IllegalArgumentException</code> if the provided heap is empty
+	 */
+	private static <T> String tradeHeapForString(Heap<T> daHeap){
+		// check if this heap is not empty
+		if(daHeap.empty())
+			throw new IllegalArgumentException("Your heap was empty, cannot trade for String.");
+		// Initialise a StringBuilder
+		StringBuilder sbuilder = new StringBuilder();
+	    // iterate through entire heap, THIS EMPTIES THE HEAP!
+		while(!daHeap.empty()){ 
+			// append the element to a String, and delete it
+			sbuilder.append(daHeap.deleteFirst());
+			sbuilder.append(" ");
+		}
+		// return the read heap-String
+		return sbuilder.toString();
 	}
 
 }

@@ -27,11 +27,11 @@ public class MarklarFilterWriter extends FilterWriter {
   /**
    * Set up filter. Nothing special here. Maklar Maklar.
    * 
-   * @param maklarMaklarMaklarwriterMaklarMaklar the writer all lines should 
+   * @param maklarMaklarMaklarWriterMaklarMaklar the writer all lines should 
    *                                             get handed over to
    */
-  protected MarklarFilterWriter(Writer maklarMaklarMaklarwriterMaklarMaklar) {
-    super(maklarMaklarMaklarwriterMaklarMaklar);
+  protected MarklarFilterWriter(Writer maklarMaklarMaklarWriterMaklarMaklar) {
+    super(maklarMaklarMaklarWriterMaklarMaklar);
   }
   
   /* (non-Javadoc)
