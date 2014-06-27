@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+
 /**
  * This test class will initialise two <code>Integer Heaps</code>.
  * Then it will use the <code>specialSerialize()</code> and <code>specialDeserialize()</code>.
@@ -20,7 +21,7 @@ public class TestHeapSerialization {
 		// Initialise two heaps
 		Heap<Integer> serializedHeap = new Heap<Integer>();
 		Heap<Integer> untouchedHeap  = new Heap<Integer>();
- 		
+ 				
 		// Feed both heaps with the same integer values from 0-42
 		for (int i = 0; i < 43; i++){
 			serializedHeap.insert(i);						
