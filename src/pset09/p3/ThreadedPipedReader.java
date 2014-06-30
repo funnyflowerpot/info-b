@@ -54,7 +54,7 @@ public class ThreadedPipedReader extends PipedReader implements Runnable {
         writer.write(line + System.lineSeparator());
         writer.flush();
       }
-    
+      
     } catch(InterruptedIOException e) {
       // everything is okay, we wanted to arrive here to escape while(true)
     	

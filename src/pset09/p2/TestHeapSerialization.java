@@ -59,10 +59,10 @@ public class TestHeapSerialization {
 		// Compare both Strings, if they match the Serialization was successful.
 		System.out.format("Test: %s\n", serializedString.matches(untouchedString) ? "[OK]" : "[FAIL]");
 		
-		/* Visual test: 
+		
 		System.out.println("String 01:"+serializedString);
 		System.out.println("String 02:"+untouchedString);
-		*/
+		
 	}
 	
 	
