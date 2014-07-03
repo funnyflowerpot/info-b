@@ -25,8 +25,10 @@ public class Sleeper extends Thread {
 // ####################### Synchronized block START #####################
 				synchronized(values){ // bound to queue as monitor object  			
 					// check if queue is empty
-					if(values.empty())
-						// if so, wait with dequeuing
+					if(values.empty()) // sufficient, because there is only one other thread
+									   // otherwise 'while' because further threads need a
+									   // looping check of empty()
+ 						// if so, wait with dequeuing
 						values.wait();
 															
 					// if queue is not empty, dequeue							 

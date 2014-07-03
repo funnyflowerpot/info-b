@@ -29,7 +29,7 @@ public class RandomGenerator extends Thread {
 				synchronized(randoms){
 // ####################### Synchronized block START #####################
 					// check if queue is already full
-					if(randoms.full())    			
+					if(randoms.full())    	// sufficient, because there is only one other thread		
 						// if so, wait the thread (putting it in internal
 						// monitor wait list
 						randoms.wait();

@@ -65,7 +65,6 @@ public class Queue<E> {
 			// at this point the queue is not full (this does not imply that it is empty)
 			objects[(first + size) % objects.length] = o;
 			size++;	
-			condEmpty.signal();
 		
 		// Now all Exception will be caught 		
 		} catch (IllegalMonitorStateException imse){
@@ -75,6 +74,7 @@ public class Queue<E> {
 			
 		// We must make sure, that the thread will unlock again, therefore -> finally
 		} finally{//####################### locked - block END #####################
+			condEmpty.signal();
 			lock.unlock();
 		}
 
