@@ -56,7 +56,7 @@ public class MarklarTranslator {
           
           System.out.println("Shutdown requested. Finishing threads...");
 
-          // initiate shutdown
+          // initiate shutdown balhah
           tpw.finish();
           tpr.finish();
           

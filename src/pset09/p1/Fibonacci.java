@@ -23,27 +23,24 @@ public class Fibonacci implements Serializable{
    /**
 	 * Standard Serializenumber
 	 */
-  // TODO regenerate unique UID (delete field, let eclipse generate in tool-tip-menu)
-  // Menninghaus suggested this, why is a generated one better?
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Home of our persistent file.
+	 */
+	private static final String SERIALIZED_HASH_MAP_PATH = "resources/savedHash.ser";
+	
+	/**
+	 * Data storage.
+	 */
 	private static HashMap<Integer, Long> fibonacciHash;
-	// if fibonacciHash would be final (see comment below)
 
    /**
     * Fill HashMap with initial key-value-pairs.
     */
-	// TODO static-block, see below
-	// having a static-block is not that desirable (strange, given implementation
-	// by Matthias), but having an even bigger static-block should be avoided i think.
-	// otherwise this would involve _big_ changes in the internal design of this class
-	// http://wierdnwildcreatures.wikia.com/wiki/File:Scylla_%26_Charybdis.jpg
-	//		-YES-
-	// But I don't know any feasible workaround?
-	
    static {
 	   // Initialise a File Object with name of savedHash
-	   File savedHash = new File("savedHash.ser");
+	   File savedHash = new File(SERIALIZED_HASH_MAP_PATH);
 	   // Check if the savedHash file does exist
 	   if(!savedHash.exists()){	
 		   // if it doesn't exist, initialise HashMap with 2 values
@@ -56,7 +53,7 @@ public class Fibonacci implements Serializable{
 	   else{ // If there already exists a file containing a HashMap
 		   
 		   // nice to have conventional extension ".ser"
-		   try(FileInputStream fis = new FileInputStream("savedHash.ser");
+		   try(FileInputStream fis = new FileInputStream(SERIALIZED_HASH_MAP_PATH);
 			   ObjectInputStream ois = new ObjectInputStream(fis);) 
 		   {
 			   // import the given HashMap 
@@ -88,7 +85,7 @@ public class Fibonacci implements Serializable{
 	// Save the initialised HashMap to a file with the correct name
 	   // Streams: File<--FileOutputStream<--ObjectOutputStream<--write HashMap in OOS
 	   // File output should be of *.ser format
-	   try(FileOutputStream fos = new FileOutputStream("savedHash.ser");
+	   try(FileOutputStream fos = new FileOutputStream(SERIALIZED_HASH_MAP_PATH);
 		   ObjectOutputStream oos = new ObjectOutputStream(fos);) 
 	   { //Save the HashMap in the file
 		 // writeObject will be serialised to the ObjectOutputStreamObject
@@ -116,7 +113,13 @@ public class Fibonacci implements Serializable{
       }
       return getFibonacci(n);
    }
-
+   
+   /**
+    * This method returns the Fibonacci number as a long
+    *  - provided by Menninghaus 
+    * @param n of type int is the number you want to evaluate the fibonacci to
+    * @return a long that is the evaluate fibonacci
+    */
    private static long getFibonacci(int n) {
       if (fibonacciHash.containsKey(n)) {
     	  // Next line: For testing purposes
@@ -136,7 +139,8 @@ public class Fibonacci implements Serializable{
          return fibonacci;
       }
    }
-
+/*
+// We have our own testing class.
    public static void main(String[] args) {
       if (args.length != 1) {
          printUsage();
@@ -150,9 +154,8 @@ public class Fibonacci implements Serializable{
    }
 
    private static void printUsage() {
-     // TODO Matthias! vowels are not expensive. duh. (same holds for javadoc o_O)
-      System.out.println("java calc/Fiboncci n");
+      System.out.println("java calc/Fibonacci n");
       System.out.println("n must be a natural number >= 0");
    }
-
+*/
 }

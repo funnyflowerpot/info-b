@@ -6,13 +6,31 @@ import java.io.InterruptedIOException;
 import java.io.PipedReader;
 import java.io.Writer;
 
+/**
+ * @author pwicke, sriegl
+ *
+ * End point of a pipe, that writes data it receives from the pipe to a 
+ * <code>Writer</code>, that gets decorated by this class using the decorator
+ * pattern.
+ */
 public class ThreadedPipedReader extends PipedReader implements Runnable {
 
+  /** underlying thread to allow for recurrence */
   private Thread thread;
+  
+  /** allow for readLine() */
   private BufferedReader br;
+  
+  /** where to write received data to */
   private Writer writer;
 
 
+  /**
+   * Setup an end point for a pipe, with <code>writer</code> being a sink
+   * that gets decorated by this class.
+   * 
+   * @param writer output for received data
+   */
   public ThreadedPipedReader(Writer writer) {
     super();
     br = new BufferedReader(this);
@@ -20,6 +38,9 @@ public class ThreadedPipedReader extends PipedReader implements Runnable {
     thread = new Thread(this);
   }
   
+  /* (non-Javadoc)
+   * @see java.lang.Runnable#run()
+   */
   @Override
   public void run() {
 
@@ -33,14 +54,16 @@ public class ThreadedPipedReader extends PipedReader implements Runnable {
         writer.write(line + System.lineSeparator());
         writer.flush();
       }
-    
+      
     } catch(InterruptedIOException e) {
-      // everything is okay
+      // everything is okay, we wanted to arrive here to escape while(true)
+    	
     } catch(IOException e) {
       e.printStackTrace();
       System.err.println("User output thread was interrupted. That's unusual.");
     }
     
+    // for a proper "shutdown" of this thread, we need to close all open streams
     try {
       super.close();
       br.close();
@@ -49,14 +72,25 @@ public class ThreadedPipedReader extends PipedReader implements Runnable {
     }
   }
   
+  /**
+   * Start underlying thread. 
+   */
   public void start() {
     thread.start();
   }
 
+  /**
+   * Join underlying thread.
+   * 
+   * @throws InterruptedException if joining threads causes trouble
+   */
   public void join() throws InterruptedException {
     thread.join();
   }
 
+  /**
+   * Request shutdown of thread.
+   */
   public void finish() {
     thread.interrupt();
   }

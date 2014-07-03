@@ -47,7 +47,7 @@ private static final int DEFAULT_INITIAL_CAPACITY = 11;
    // This field as well is 'transient'
    private transient int size = 0;
 
-   private final Comparator<? super E> comparator;
+   private transient final Comparator<? super E> comparator;
 
    /**
     * Creates a new empty heap. <code>E</code> must implement
@@ -98,15 +98,6 @@ private static final int DEFAULT_INITIAL_CAPACITY = 11;
 	   out.writeObject(realHeap);	
    }
    /**
-    * This is a protected entry to the serialise method writeObject, such that
-    * a test class can call it from outside of this class.
-    * @throws <code>IOException</code> Any exception thrown by the underlying OutputStream
-    */
-   protected void specialSerialize(ObjectOutputStream out) throws IOException{
-	   writeObject(out);
-   }
-	
-   /**
     * This is the method provided to read from a given ObjectInputStream
     * @param in <code>ObjectInputStream</code> The stream you want to read from
     * @throws <code>ClassNotFoundException</code> no definition for the class with
@@ -119,40 +110,6 @@ private static final int DEFAULT_INITIAL_CAPACITY = 11;
 	    this.heap = (Object[]) in.readObject();
 	    // give the size
 	    this.size = heap.length ;
-	}
-	/**
-	 * This is a protected entry to the deserialise method readObject, such that
-	 * a test class can call it from outside of this class.
-	 * @throws <code>IOException</code> Any exception thrown by the underlying InputStream
-	 */
-	protected void specialDeserialize(ObjectInputStream in) throws ClassNotFoundException, IOException{
-	   readObject(in);
-   }
-   
-	/**
-	 * This method will return the given heap as <code>String</code>.
-	 * It will empty the heap. Improvement: One could implement a
-	 * deep copy and copy the heap before reading it out in order to
-	 * prevent destruction of heap. But as this method is for testing
-	 * use only, it will destroy the heap. 
-	 * @param heap <code>Generic Heap</code> that you want to trade for a String
-	 * @return <code>String</code> with the elements of the heap
-	 * @throws <code>IllegalArgumentException</code> if the provided heap is empty
-	 */
-	protected String tradeHeapForString(){
-		// check if this heap is not empty
-		if(this.empty())
-			throw new IllegalArgumentException("Your heap was empty, cannot trade for String.");
-		// Initialise a StringBuilder
-		StringBuilder sbuilder = new StringBuilder();
-	    // iterate through entire heap, THIS EMPTIES THE HEAP!
-		while(!this.empty()){ 
-			// append the element to a String, and delete it
-			sbuilder.append(this.deleteFirst());
-			sbuilder.append(" ");
-		}
-		// return the read heap-String
-		return sbuilder.toString();
 	}
    
    /**
