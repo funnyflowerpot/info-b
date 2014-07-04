@@ -2,20 +2,18 @@
 # info-b
 
 
-Agenda: Problem Set 09           100 % 
+Agenda: Problem Set 10           73 % 
 
-- 9.1 Standard-Serialisierung    100 %
-  - review by pwicke
+- 10.1 Monitors and Locks    	 95 %
+  - needs review
   
-- 9.2 Spezielle Serialisierung   100 %
-  - review by sriegl
+- 10.2 AntRace   				 95 %
+  - needs review by sriegl
   
-- 9.3 Threads und Ströme         100 %
-  - complete docs
-  - review by pwicke
+- 10.3 Concurrent SearchLine      5 %
+  - Put in the short outline
   
-- 9.4 Spezielle Threads          100 %
-  - to be done
-  - (review by pwicke (not yet))
+- 10.4 Questions	            (100 %)
+  - Business as usual
   
   
