@@ -1,13 +1,10 @@
-
-package pset10.p3;
-
+package io;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 /**
  * Extends the LineNumberReader by searching for matches with a given regular
@@ -17,7 +14,7 @@ import java.util.regex.Pattern;
  * 
  */
 public class SearchLineReader extends LineNumberReader {
-	
+
    /**
     * {@code Pattern} to search matches for
     */

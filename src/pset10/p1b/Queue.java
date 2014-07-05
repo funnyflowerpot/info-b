@@ -101,13 +101,13 @@ public class Queue<E> {
 			E o = (E) objects[first];
 			first = (first + 1) % objects.length;
 			size--;
-			condFull.signal();
 			return o;
 			
 		} catch (IllegalMonitorStateException imse){
 			imse.printStackTrace();
 		
 		} finally{//####################### locked - block END #####################
+      condFull.signal();
 			lock.unlock();
 		}
 		return null;	//Will never be reached
