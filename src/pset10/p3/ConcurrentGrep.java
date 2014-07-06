@@ -57,7 +57,7 @@ public class ConcurrentGrep extends FileVisitorAdapter {
   public static void main(String[] args) {
     
     // lazy argument acquisition for Eclipse users
-    // TODO for testing, i recommend "-r [vV]isitor src" as args
+    // testing suggestion: use "-r [vV]isitor src" as arguments
     args = TestingLibrary.populateProgramArguments(args);
     
     // get a new instance by given arguments
